@@ -1,0 +1,1 @@
+{"mappings":"AAAA,WAAW;AAEX,MAAM,MAAM","sources":["src/public/js/main.js"],"sourcesContent":["//hämta API\r\n\r\nconst url = \"http://localhost:1200/api\";\r\n\r\n"],"names":[],"version":3,"file":"about.b78a7d74.js.map","sourceRoot":"/__parcel_source_root/"}

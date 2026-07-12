@@ -1,0 +1,1 @@
+//funktioner relaterade tll meny: CRUD, visa från api
