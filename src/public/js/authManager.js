@@ -11,7 +11,7 @@ export function login(event) {
     //är båda fälten ifyllda?
     if(!username || !password) {
 
-        document.getElementById("fillInAllLogin").textContent = "Bägga fälten behöver fyllas i.";
+        document.getElementById("fillInAllLogin").textContent = "Bägge fälten behöver fyllas i.";
 
         return;
     }

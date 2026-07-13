@@ -23,7 +23,68 @@
     <h1>Menyhanteraren</h1>
     
     <main>
-        
+        <h2>Lägg till i menyn</h2>
+
+        <form id="menu-form">
+            <div>
+                <label for="category">Kategori</label>
+                <br>
+                <select name="category" id="category">
+                    <option value="sandwich">Macka</option>
+                    <option value="pie">Paj</option>
+                    <option value="dessert">Fika</option>
+                    <option value="drink">Drynk</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="name">Namn</label>
+                <br>
+                <input type="text" id="name" name="name"> 
+            </div>
+
+            <div>
+                <label for="description">Innehållsbeskrivning: </label>
+                <br>
+                <input type="text" id="description" name="description"> 
+            </div>
+
+            <div>
+                <label for="price">Pris</label>
+                <br>
+                <input type="text" id="price" name="price"> 
+            </div>
+
+            <!--felmeddelanden-->
+            <p id="error-message"></p>
+            <p id="fillInAllMenu"></p>
+
+            <div>
+                <input id="post-menu-button" type="submit" value="Lägg till">
+            </div>
+        </form>
+
+
+        <section>
+            <h2>Artiklar i menyn</h2>
+
+            <div id="sandwiches-container">
+                
+            </div>
+
+            <div id="pies-container">
+                
+            </div>
+
+            <div id="desserts-container">
+                
+            </div>
+
+            <div id="drinks-container">
+                
+            </div>
+
+        </section>
     </main>
 </body>
 </html>

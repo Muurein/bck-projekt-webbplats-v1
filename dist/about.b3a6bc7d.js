@@ -717,12 +717,20 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 //hämta API
 //importera från authManager.js
 var _authManagerJs = require("./authManager.js");
+//importera från menuManager.js
+var _menuManagerJs = require("./menuManager.js");
 const url = "http://localhost:1200/api";
 //skicka anvädnaren till login om användaren är oinloggad på en adminsida
-if (window.location.pathname.includes("adminindex.html")) (0, _authManagerJs.auth)();
+if (window.location.pathname.includes("adminindex.html") || window.location.pathname.includes("menumanager.html")) (0, _authManagerJs.auth)();
 //logga in
 const loginFormEl = document.getElementById("login-form");
-loginFormEl.addEventListener("submit", (0, _authManagerJs.login));
+if (loginFormEl) loginFormEl.addEventListener("submit", (0, _authManagerJs.login));
+const menuFormEl = document.getElementById("menu-form");
+//skicka formulär
+if (menuFormEl) {
+    menuFormEl.addEventListener("submit", (0, _menuManagerJs.menuFormValues));
+    (0, _menuManagerJs.fetchItems)().then((0, _menuManagerJs.render));
+}
 
 },{"./authManager.js":"8zdnW"}],"8zdnW":[function(require,module,exports,__globalThis) {
 //authorization-relaterade functioner: logga in, logga ut, JWT
@@ -739,7 +747,7 @@ function login(event) {
     const password = document.getElementById("login-password").value;
     //är båda fälten ifyllda?
     if (!username || !password) {
-        document.getElementById("fillInAllLogin").textContent = "B\xe4gga f\xe4lten beh\xf6ver fyllas i.";
+        document.getElementById("fillInAllLogin").textContent = "B\xe4gge f\xe4lten beh\xf6ver fyllas i.";
         return;
     }
     //logga in användaren
