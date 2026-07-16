@@ -732,7 +732,7 @@ if (menuFormEl) {
     (0, _menuManagerJs.fetchItems)().then((0, _menuManagerJs.render));
 }
 
-},{"./authManager.js":"8zdnW"}],"8zdnW":[function(require,module,exports,__globalThis) {
+},{"./authManager.js":"8zdnW","./menuManager.js":"Nlzqr"}],"8zdnW":[function(require,module,exports,__globalThis) {
 //authorization-relaterade functioner: logga in, logga ut, JWT
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -808,6 +808,173 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}]},["6BGfL","c812S"], "c812S", "parcelRequire79e0", {})
+},{}],"Nlzqr":[function(require,module,exports,__globalThis) {
+//funktioner relaterade tll meny: CRUD, visa från api
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+//hämta meny
+parcelHelpers.export(exports, "fetchItems", ()=>fetchItems);
+//skapa nytt meny-item
+parcelHelpers.export(exports, "createItem", ()=>createItem);
+//uppdatera meny-item
+parcelHelpers.export(exports, "updateItem", ()=>updateItem);
+//ta bort meny-item
+parcelHelpers.export(exports, "deleteItem", ()=>deleteItem);
+//hämta information som angivits i formuläret
+parcelHelpers.export(exports, "menuFormValues", ()=>menuFormValues);
+//skriv ut items
+parcelHelpers.export(exports, "render", ()=>render);
+const url = "http://localhost:1200/api/menu";
+const currentItemId = null;
+async function fetchItems() {
+    try {
+        const response = await fetch(`${url}/getItem`);
+        if (!response.ok) throw new Error("Ett HTTP-fel har intr\xe4ffat: " + response.status);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.log("Ett fel har intr\xe4ffat n\xe4r menyn skulle h\xe4mtas: ", error);
+        return [];
+    }
+}
+async function createItem(category, name, description, price) {
+    try {
+        let items = {
+            category,
+            name,
+            description,
+            price
+        };
+        const response = await fetch(`${url}/addItem`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(items)
+        });
+        const data = await response.json();
+        //felmeddelande utifall något gick fel
+        if (!response.ok) document.getElementById("error-message").textContent = "data.message";
+        //updatera listan med items
+        fetchItems().then(render);
+    } catch (error) {
+        console.log("Ett fel har intr\xe4ffat n\xe4r en ny artikel skulle l\xe4ggas till i menyn");
+    }
+}
+async function updateItem(id, category, name, description, price) {
+    const item = {
+        category,
+        name,
+        description,
+        price
+    };
+    const response = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(item)
+    };
+    return await response.json();
+}
+async function deleteItem(id) {
+    try {
+        const response = await fetch(`${url}/deleteItem/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        return response.ok;
+    } catch (error) {
+        console.log("Ett fel har uppst\xe5tt n\xe4r en artikel skulle tas bort: ", error);
+    }
+}
+function menuFormValues(event) {
+    event.preventDefault();
+    const category = document.getElementById("category").value;
+    const name = document.getElementById("name").value;
+    const description = document.getElementById("description").value;
+    const price = document.getElementById("price").value;
+    if (!category || !name || !description || !price) {
+        document.getElementById("fillInAllMenu").textContent = "Alla f\xe4lt beh\xf6ver fyllas i";
+        return;
+    }
+    if (currentItemId) {
+        updateItem(currentItemId, category, name, description, price);
+        currentItemId = null;
+        document.getElementById("post-menu-button").value = "L\xe4gg till";
+    } else createItem(category, name, description, price);
+    //återställer formuläret
+    document.getElementById("menu-form").reset();
+}
+function render(items) {
+    const sandwichesContainerEl = document.getElementById("sandwiches-container");
+    sandwichesContainerEl.innerHTML = "";
+    const piesContainerEl = document.getElementById("pies-container");
+    piesContainerEl.innerHTML = "";
+    const dessertsContainerEl = document.getElementById("desserts-container");
+    dessertsContainerEl.innerHTML = "";
+    const drinksContainerEl = document.getElementById("drinks-container");
+    drinksContainerEl.innerHTML = "";
+    //gå igenom listan med items //article, h3 (namn), p (description, kursiv), 
+    items.forEach((item)=>{
+        //article
+        const articleEl = document.createElement("article");
+        //h3 (name)
+        const nameEl = document.createElement("h3");
+        nameEl.textContent = item.name;
+        nameEl.classList.add("name-h3");
+        // p (description i kursiv)
+        const descriptionEl = document.createElement("p");
+        descriptionEl.textContent = item.description;
+        descriptionEl.classList.add("description-p");
+        //pris
+        const priceEl = document.createElement("p");
+        priceEl.textContent = item.price + " kr";
+        priceEl.classList.add("price-p");
+        //uppdatera-knapp
+        const updateButtonEl = document.createElement("button");
+        updateButtonEl.textContent = "\xc4ndra";
+        updateButtonEl.onclick = ()=>{
+            currentItemId = item._id;
+            document.getElementById("category").value = item.category;
+            document.getElementById("name").value = item.name;
+            document.getElementById("description").value = item.description;
+            document.getElementById("price").value = item.price;
+            document.getElementById("post-menu-button").value = "Spara \xe4ndringar";
+        };
+        //ta bort-knapp
+        const deleteButtonEl = document.createElement("button");
+        deleteButtonEl.textContent = "Ta bort";
+        deleteButtonEl.onclick = ()=>{
+            deleteItem(item._id).then(()=>{
+                fetchItems().then(render);
+            });
+        };
+        //lägg till allt i rätt kategori
+        articleEl.appendChild(nameEl);
+        articleEl.appendChild(descriptionEl);
+        articleEl.appendChild(priceEl);
+        articleEl.appendChild(updateButtonEl);
+        articleEl.appendChild(deleteButtonEl);
+        switch(item.category){
+            case "sandwich":
+                sandwichesContainerEl.appendChild(articleEl);
+                break;
+            case "pie":
+                piesContainerEl.appendChild(articleEl);
+                break;
+            case "dessert":
+                dessertsContainerEl.appendChild(articleEl);
+                break;
+            case "drink":
+                drinksContainerEl.appendChild(articleEl);
+                break;
+        }
+    });
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["6BGfL","c812S"], "c812S", "parcelRequire79e0", {})
 
 //# sourceMappingURL=about.b3a6bc7d.js.map

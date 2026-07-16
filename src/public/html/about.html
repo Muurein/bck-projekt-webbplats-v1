@@ -3,27 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Om oss</title>
+    <title>Startsida</title>
 
     <link rel="stylesheet" href="../css/main.scss">
     <script src="../js/main.js" type="module" defer></script>
+
+    <!--font: Inter-->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+    </style>
 </head>
 
 <body>
     <header>
+        <!--logga-->
+        <div>
+            <p class="logo">HC</p>
+            <p class="logo-p">Hornborgarsjöns café</p>
+        </div>
+
+        <!--huvudmeny-->
         <nav>
-            <ul>
-                <li><a href="index.html">Hem</a></li>
-                <li><a href="menu.html">Meny</a></li>
-                <li class="current-page">Om oss</li>
+            <ul class="main-menu">
+                <li><a href="index.html">HEM</a></li>
+                <li><a href="menu.html">MENY</a></li>
+                <li  class="current-page">OM OSS</li>
             </ul>
         </nav>
     </header>
 
-    <h1>Om oss</h1>
+ 
     
-    <main>
-        
+    <main class="main-textbox">
+        <div class="about-flexbox">
+            <div class="about-div sidebar-div">
+                <img class="sidebar-image" src="../images/cranes.jpg" width="200" height="800">
+            </div>
+
+            <div class="about-div">
+                <h1>OM OSS</h1>
+                <p>
+                    Men det är givetvis inte bara de ståtliga tranorna som kan bevittnas vid Sveriges bästa fågelsjö. 
+                    Platsen attraherar mängder av fågelarter som bland annat svanar, doppingar, gäss, änder och sothöns, 
+                    som har sjön som sin rast- eller häckningsplats. Under våren och hösten, men även resten av året, 
+                    ges goda möjligheter att få se flera arter av rovfåglar runt sjön. Brun kärrhök och fiskgjuse är vanliga 
+                    inslag och har du tur kan du få se giganterna kungsörn och havsörn segla över landskapet. Vintertid kan 
+                    du följa med på speciella vinterfågelhelger, då du får en chans att uppleva de rovfåglar som övervintrar vid 
+                    Hornborgasjön. Och vill man inte enbart titta på fåglar på egen hand så arrangeras en lång rad olika 
+                    naturaktiviteter per år i området. 
+                </p>
+                <p>
+                    Men det är givetvis inte bara de ståtliga tranorna som kan bevittnas vid Sveriges bästa fågelsjö. Platsen 
+                    attraherar mängder av fågelarter som bland annat svanar, doppingar, gäss, änder och sothöns, som har sjön 
+                    som sin rast- eller häckningsplats. Under våren och hösten, men även resten av året, ges goda möjligheter 
+                    att få se flera arter av rovfåglar runt sjön. Brun kärrhök och 
+                </p>
+
+                <h2>KONTAKT</h2>
+                <p>
+                    Men det är givetvis inte bara de ståtliga tranorna som kan bevittnas vid Sveriges bästa fågelsjö. Platsen 
+                    attraherar mängder av fågelarter som bland annat svanar, doppingar, gäss, änder och sothöns, som har sjön 
+                    som sin rast- eller häckningsplats. Under våren och hösten, men även resten av året, ges goda möjligheter 
+                    att få se flera arter av rovfåglar runt sjön. Brun kärrhök och 
+                </p>
+            </div>
+
+            <div class="about-div sidebar-div">
+                <img class="sidebar-image" src="../images/cranes.jpg" width="200" height="800">
+            </div>
+        </div>
     </main>
+
+    <footer>
+        <!--adress-->
+        <div>
+            <p class="bold-text">Adress:</p>
+            <p>Si och så vägen 14</p>
+            <p>54943</p>
+            <p>Skövde</p>
+        </div>
+
+        <!--kontaktuppgifter-->
+        <div>
+            <p class="bold-text">Kontaktuppgifter:</p>
+            <p>Telefonnummer: 0714-15 16 17</p>
+            <p>Mail: hc@telia.se</p>
+        </div>
+    </footer>
 </body>
 </html>

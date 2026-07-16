@@ -1,0 +1,146 @@
+/* vanlig layout */
+@use "/src/public/css/variables.scss" as v;
+@use "/src/public/css/components.scss" as c;
+
+
+* {
+    margin: 0;
+}
+
+// <weight>: Use a value from 100 to 900
+// <uniquifier>: Use a unique and descriptive class name
+.inter-main-font {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+}
+
+body {
+    background-color: v.$primary-color;
+    color: v.$secondary-color;
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.4em
+}
+
+h1 {
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+
+/********************************************************************************************************************************
+    HUVUDMENY, BRANDING, HERO-BILD
+********************************************************************************************************************************/
+header {
+    border-bottom: 1px solid v.$secondary-color;
+    height: 180px;
+}
+
+/* HUVUDMENY */
+.main-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-left: auto;
+    padding-top: 80px;
+    margin-right: auto;
+    width: 400px;
+    height: auto;
+}
+
+.main-menu li {
+    font-size: 20px;
+    font-weight: 300;
+    list-style-type: none;
+}
+
+.current-page {
+    text-decoration: underline;
+}
+
+.main-menu a {
+    color: v.$secondary-color;
+    text-decoration: none;
+}
+
+.main-menu a:hover {
+    font-weight: 600;
+}
+
+
+/* HERO-BILD */
+.hero-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover; 
+}
+
+
+/********************************************************************************************************************************
+    MAIN
+********************************************************************************************************************************/
+.main-textbox {
+    margin-left: auto;
+    margin-top: 3em;
+    margin-right: auto;
+    margin-bottom: 5em;
+    max-width: 600px;
+    width: 80%;
+    height: auto;
+}
+
+.main-textbox h1 {
+    @include c.headline(36px);
+}
+
+.main-textbox h2 {
+    @include c.headline(28px);
+    margin-top: 2em;
+}
+
+.main-textbox p {
+    margin-bottom: 1.5em;
+}
+
+
+
+/* OM OSS */
+.sidebar-div {
+    display: none;
+}
+
+.about-div h1 {
+    margin-top: 2em;
+}
+
+
+
+
+
+
+
+/********************************************************************************************************************************
+    FOOTER
+********************************************************************************************************************************/
+footer {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid v.$secondary-color;
+    padding-top: 2em;
+}
+
+footer div {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2em;
+    width: 200px;
+    height: auto;
+    text-align: center;
+}
+
+.bold-text {
+    font-weight: 600;
+}

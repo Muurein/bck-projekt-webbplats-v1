@@ -163,7 +163,7 @@ export function render(items) {
         //h3 (name)
         const nameEl = document.createElement("h3");
         nameEl.textContent = item.name;
-        nameEl.classList.add("name-h3");
+        nameEl.classList.add("name-h3"); 
 
 
         // p (description i kursiv)
