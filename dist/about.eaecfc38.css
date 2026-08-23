@@ -28,6 +28,23 @@ header {
   height: 180px;
 }
 
+.branding {
+  text-align: center;
+  padding-top: 30px;
+}
+
+.logo {
+  letter-spacing: 1px;
+  font-size: 46px;
+  font-weight: 600;
+}
+
+.logo-p {
+  margin-top: 10px;
+  font-size: 16px;
+  font-style: italic;
+}
+
 .main-menu {
   flex-direction: row;
   justify-content: space-around;
@@ -35,7 +52,7 @@ header {
   height: auto;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 80px;
+  padding-top: 45px;
   display: flex;
 }
 
@@ -102,6 +119,40 @@ header {
   margin-top: 2em;
 }
 
+.main-items h1 {
+  letter-spacing: 1px;
+  text-align: center;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  font-size: 36px;
+  font-weight: 300;
+  line-height: 1.1em;
+}
+
+.main-items {
+  max-width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.menu-gridbox h2 {
+  letter-spacing: 1px;
+  text-align: center;
+  text-align: left;
+  margin-bottom: .5em;
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1.1em;
+}
+
+.gridbox-div {
+  margin-bottom: 3em;
+}
+
+.description-p {
+  font-style: italic;
+}
+
 footer {
   border-top: 1px solid #242323;
   flex-direction: column;
@@ -120,5 +171,134 @@ footer div {
 
 .bold-text {
   font-weight: 600;
+}
+
+.admin-p {
+  margin-top: -6px;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.main-admin {
+  text-align: center;
+}
+
+.main-admin a {
+  color: #242323;
+}
+
+.main-admin a:hover {
+  color: #940e0e;
+  font-weight: 600;
+}
+
+.border {
+  border-top: 5px dashed #242323;
+  width: 80%;
+  height: 1px;
+  margin: 3em auto 2em;
+}
+
+.main-form h1, .main-form h2 {
+  text-align: center;
+  margin-top: 1.5em;
+}
+
+.main-form {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#menu-form {
+  margin-top: 1.5em;
+}
+
+.user-input {
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 10px;
+  width: 60%;
+  height: 1.8em;
+  margin-top: 3px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#menu-form div {
+  margin-top: 1em;
+}
+
+#post-menu-button, .menu-button, .login-button {
+  color: #fef9f4;
+  background-color: #242323;
+  border: none;
+  border-radius: 15px;
+  width: 20%;
+  height: 3em;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-size: 13px;
+}
+
+#post-menu-button:hover, .menu-button:hover, .login-button:hover {
+  color: #242323;
+  cursor: pointer;
+  background-color: #fef9f4;
+  border: 1px solid #242323;
+}
+
+.menu-button, .login-button {
+  margin-bottom: 1.8em;
+  margin-right: 6px;
+}
+
+.price-p {
+  margin-bottom: 4px;
+}
+
+@media (width >= 1024px) {
+  .main-textbox {
+    max-width: auto;
+    width: auto;
+  }
+
+  .about-flexbox {
+    flex-direction: row;
+    justify-content: space-between;
+    display: flex;
+  }
+
+  .sidebar-div {
+    flex: 0 0 250px;
+    display: block;
+  }
+
+  .about-div:not(.sidebar-div) {
+    flex: 1;
+    max-width: 600px;
+  }
+
+  .sidebar-image {
+    object-fit: cover;
+    max-width: 250px;
+    height: 1000px;
+  }
+
+  .main-items {
+    max-height: 50%;
+  }
+
+  .menu-gridbox {
+    grid-template-columns: auto auto;
+    display: grid;
+  }
+
+  .main-form {
+    width: 40%;
+  }
+
+  .main-items-admin h2 {
+    margin-bottom: .7em;
+  }
 }
 /*# sourceMappingURL=about.eaecfc38.css.map */

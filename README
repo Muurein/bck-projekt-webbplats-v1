@@ -1,0 +1,24 @@
+# Hornborgarsjöns Café Webbplats - projektarbete i kursesn Backendbaserad webbutveckling
+Webbplatsen är uppdelat i två separata gränssnitt: ett publikt och ett administrativt.
+
+I det publika kan användare läsa om företaget och se deras meny. 
+
+I det administrativa kan inloggade användare ändra menyn. Uppdateringarna visas dynamiskt i det publika gränssnittet.
+
+## Undersidor 
+### Publikt gränssnitt
+- Hem: användaren introduceras till området Hornborgarsjön och ges en kort introduktion till företaget.
+- Meny: här kan användaren se menyn.
+- Om oss: företaget presenterar sig och sina kontaktuppgifter.
+
+### Administrativt gränssnitt
+- Hem: den inloggade användaren välkomnas till administrationspanelen.
+- Menyhanteraren: här kan den inloggade användaren se, skapa, ändra och ta bort artiklar.
+- Logga in: inloggnignssidan där användaren också kan logga ut. Oinloggade användare hänvisas hit om de försöker de andra två undersidorna i ett oinloggat tillstånd.
+
+## CRUD-operationer:
+Webbplatsen använder följande CRUD-operationer:
+- GET: hämtar och visar upp innehållet i menyn.
+- POST: skapar nya artiklar i menyn.
+- PUT: uppdaterar artiklar.
+- DELETE: tar bort artiklar.

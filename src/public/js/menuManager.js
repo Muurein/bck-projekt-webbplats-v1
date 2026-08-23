@@ -1,7 +1,7 @@
 //funktioner relaterade tll meny: CRUD, visa från api
 const url = "http://localhost:1200/api/menu";
 
-const currentItemId = null;
+let currentItemId = null;
 
 
 //hämta meny
@@ -40,7 +40,8 @@ export async function createItem(category, name, description, price) {
         const response = await fetch(`${url}/addItem`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
             },
             body: JSON.stringify(items),
         });
@@ -49,7 +50,7 @@ export async function createItem(category, name, description, price) {
 
         //felmeddelande utifall något gick fel
         if(!response.ok) {
-            document.getElementById("error-message").textContent = "data.message";
+            document.getElementById("error-message").textContent = data.error;
         }
 
         //updatera listan med items
@@ -73,10 +74,11 @@ export async function updateItem(id, category, name, description, price) {
         price
     };
 
-    const response = (`${url}/updateItem/${id}`, {
+    const response = await fetch(`${url}/updateItem/${id}`, {
         method: "PUT",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
         body: JSON.stringify(item)
     });
@@ -94,7 +96,8 @@ export async function deleteItem(id) {
         const response = await fetch(`${url}/deleteItem/${id}`, {
             method: "DELETE",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
             }
         });
 
@@ -107,7 +110,7 @@ export async function deleteItem(id) {
 
 
 //hämta information som angivits i formuläret
-export function menuFormValues(event) {
+export async function menuFormValues(event) {
     event.preventDefault();
 
     const category = document.getElementById("category").value;
@@ -143,16 +146,18 @@ export function menuFormValues(event) {
 //skriv ut items
 export function render(items) {
 
-    const sandwichesContainerEl = document.getElementById("sandwiches-container");
+    const isAdminPage = document.getElementById("menu-form") !== null;
+
+    const sandwichesContainerEl = document.getElementById("sandwiches-container") ?? document.getElementById("sandwiches-container-public");
     sandwichesContainerEl.innerHTML = "";
     
-    const piesContainerEl = document.getElementById("pies-container");
+    const piesContainerEl = document.getElementById("pies-container") ?? document.getElementById("pies-container-public");
     piesContainerEl.innerHTML = "";
 
-    const dessertsContainerEl = document.getElementById("desserts-container");
+    const dessertsContainerEl = document.getElementById("desserts-container") ?? document.getElementById("desserts-container-public");
     dessertsContainerEl.innerHTML = "";
 
-    const drinksContainerEl = document.getElementById("drinks-container");
+    const drinksContainerEl = document.getElementById("drinks-container") ?? document.getElementById("drinks-container-public");
     drinksContainerEl.innerHTML = "";
 
     //gå igenom listan med items //article, h3 (namn), p (description, kursiv), 
@@ -176,40 +181,51 @@ export function render(items) {
         priceEl.textContent = item.price + " kr";
         priceEl.classList.add("price-p");
 
-        //uppdatera-knapp
-        const updateButtonEl = document.createElement("button");
-        updateButtonEl.textContent = "Ändra";
-
-        updateButtonEl.onclick = () => {
-
-            currentItemId = item._id;
-
-            document.getElementById("category").value = item.category;
-            document.getElementById("name").value = item.name;
-            document.getElementById("description").value = item.description;
-            document.getElementById("price").value = item.price;
-
-            document.getElementById("post-menu-button").value = "Spara ändringar";
-
-        }
-
-        //ta bort-knapp
-        const deleteButtonEl = document.createElement("button");
-        deleteButtonEl.textContent = "Ta bort";
-
-        deleteButtonEl.onclick = () => {
-            deleteItem(item._id).then(() => {
-                fetchItems().then(render);
-            });
-        }
 
         //lägg till allt i rätt kategori
         articleEl.appendChild(nameEl);
         articleEl.appendChild(descriptionEl);
         articleEl.appendChild(priceEl);
-        articleEl.appendChild(updateButtonEl);
-        articleEl.appendChild(deleteButtonEl);
 
+
+        //lägg till knappar om användaren är på adminsidan
+        if(isAdminPage) {
+
+            //uppdatera-knapp
+            const updateButtonEl = document.createElement("button");
+            updateButtonEl.textContent = "Ändra";
+            updateButtonEl.classList.add("menu-button");
+
+            updateButtonEl.onclick = () => {
+
+                currentItemId = item._id;
+
+                document.getElementById("category").value = item.category;
+                document.getElementById("name").value = item.name;
+                document.getElementById("description").value = item.description;
+                document.getElementById("price").value = item.price;
+
+                document.getElementById("post-menu-button").value = "Spara ändringar";
+
+            }
+
+            //ta bort-knapp
+            const deleteButtonEl = document.createElement("button");
+            deleteButtonEl.textContent = "Ta bort";
+            deleteButtonEl.classList.add("menu-button");
+
+            deleteButtonEl.onclick = () => {
+                deleteItem(item._id).then(() => {
+                    fetchItems().then(render);
+                });
+            }
+
+            articleEl.appendChild(updateButtonEl);
+            articleEl.appendChild(deleteButtonEl);
+        }
+
+
+        //dela in items efter sina kategorier
         switch(item.category) {
             case "sandwich":
                 sandwichesContainerEl.appendChild(articleEl);

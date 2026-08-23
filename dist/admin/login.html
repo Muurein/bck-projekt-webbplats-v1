@@ -1,39 +1,48 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html><html lang="sv"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Om oss</title>
+    <title>Hornborgarsjöns Café - Hem</title>
 
     <link rel="stylesheet" href="/about.eaecfc38.css">
-    <script src="/about.b3a6bc7d.js" type="module" defer=""></script>
+    <script src="/about.b3a6bc7d.js" type="module"></script>
 </head>
 
 <body>
     <header>
+        <!--logga-->
+        <div class="branding">
+            <p class="logo">HC</p>
+            <p class="logo-p">Hornborgarsjöns café</p>
+            <p class="admin-p">Administrationspanel</p>
+        </div>
+
+        <!--huvudmeny-->
         <nav>
-            <ul>
-                <li><a href="/admin/adminindex.html">Hem</a></li>
-                <li><a href="/admin/menumanager.html">Menyhanteraren</a></li>
-                <li class="current-page">Logga in</li>
+            <ul class="main-menu">
+                <li><a href="/admin/adminindex.html">HEM</a></li>
+                <li><a href="/admin/menumanager.html">MENYHANTERAREN</a></li>
+                <li class="current-page">LOGGA IN</li>
             </ul>
         </nav>
     </header>
 
-    <h1>Logga in</h1>
+
     
-    <main>
-        <h2>Logga in</h2>
+    
+    <main class="main-form">
+        <h1>Logga in</h1>
 
         <form id="login-form">
             <div>
                 <label for="username">Användarnamn</label>
                 <br>
-                <input type="text" id="login-username" name="username"> 
+                <input type="text" id="username" name="username" class="user-input"> 
             </div>
 
             <div>
                 <label for="password">Lösenord</label>
                 <br>
-                <input type="text" id="login-password" name="password"> 
+                <input type="password" id="password" name="password" class="user-input"> 
             </div>
 
             <!--felmeddelanden-->
@@ -41,9 +50,13 @@
             <p id="fillInAllLogin"></p>
 
             <div>
-                <input id="login-button" type="submit" value="Logga in">
+                <input id="login-button" type="submit" value="Logga in" class="login-button">
             </div>
+
         </form>
+
+        <!--logga ut-->
+        <button type="button" id="logout-button" class="login-button">Logga ut</button>
     </main>
 
 </body></html>

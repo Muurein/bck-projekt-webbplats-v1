@@ -39,14 +39,31 @@ header {
     height: 180px;
 }
 
+/* BRANDING */  
+.branding {
+    padding-top: 30px;
+    text-align: center;
+}
+.logo {
+    font-size: 46px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.logo-p {
+    margin-top: 10px;
+    font-size: 16px;
+    font-style: italic;
+}
+
 /* HUVUDMENY */
 .main-menu {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     margin-left: auto;
-    padding-top: 80px;
     margin-right: auto;
+    padding-top: 45px;
     width: 400px;
     height: auto;
 }
@@ -117,6 +134,37 @@ header {
 }
 
 
+/* MENY */
+.main-items h1 {
+    @include c.headline(36px);
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+.main-items {    
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 70%;
+}
+
+.menu-gridbox h2 {
+    @include c.headline(28px);
+    margin-bottom: 0.5em;
+    text-align: left;
+}
+
+.gridbox-div {
+    margin-bottom: 3em;
+}
+
+.price-p {
+    margin-bottom: 1em;
+}
+
+.description-p {
+    font-style: italic;
+}
+
 
 
 
@@ -143,4 +191,163 @@ footer div {
 
 .bold-text {
     font-weight: 600;
+}
+
+
+/********************************************************************************************************************************
+    ADMINISTRATION
+********************************************************************************************************************************/
+/* STARTIDA */
+.admin-p {
+    margin-top: -6px;
+    font-style: italic;
+    font-size: 12px;
+}
+
+.main-admin {
+    text-align: center;
+}
+
+.main-admin a {
+    color: v.$secondary-color;
+}
+
+.main-admin a:hover {
+    font-weight: 600;
+    color: v.$tertiary-color
+}
+
+.border {
+    margin-left: auto;
+    margin-top: 3em;
+    margin-right: auto;
+    margin-bottom: 2em;
+    border-top: 5px dashed #242323;
+    width: 80%;
+    height: 1px;
+}
+
+
+/* MENYHANTERAREN */
+.main-form h1,
+.main-form h2{
+    margin-top: 1.5em;
+    text-align: center;
+}
+
+.main-form {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+#menu-form {
+    margin-top: 1.5em;
+}
+
+
+.user-input {
+    margin-left: auto;
+    margin-top: 3px;
+    margin-right: auto;
+    width: 60%;
+    height: 1.8em;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+#menu-form div {
+    margin-top: 1em;
+}
+
+#post-menu-button,
+.menu-button,
+.login-button {
+    border: none;
+    border-radius: 15px;
+    width: 20%;
+    height: 3em;
+    background-color: v.$secondary-color;
+    color: v.$primary-color;
+    font-size: 13px;
+    font-family: Inter, Arial, Helvetica, sans-serif;
+}
+
+#post-menu-button:hover,
+.menu-button:hover,
+.login-button:hover {
+    border: 1px solid v.$secondary-color;
+    background-color: v.$primary-color;
+    color: v.$secondary-color;
+    cursor: pointer; 
+}
+
+.menu-button,
+.login-button {
+    margin-right: 6px;
+    margin-bottom: 1.8em;
+}
+
+.price-p {
+    margin-bottom: 4px;
+}
+
+/********************************************************************************************************************************
+    FÖR STORA SKÄRMAR
+********************************************************************************************************************************/
+@media (min-width: 1024px) {
+
+
+
+    /********************************************************************************************************************************
+        MAIN
+    ********************************************************************************************************************************/
+    /* OM OSS */
+    .main-textbox {
+        max-width: auto;
+        width: auto;
+    }
+
+    .about-flexbox {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .sidebar-div {
+        display: block;
+        flex: 0 0 250px;
+    }
+
+    .about-div:not(.sidebar-div) {
+        flex: 1;
+        max-width: 600px;
+    }
+
+    .sidebar-image {
+        object-fit: cover;
+        max-width: 250px;
+        height: 1000px;
+    }
+
+    /* MENY */
+    .main-items {
+        max-height: 50%;;
+    }
+
+    .menu-gridbox {
+        display: grid;
+        grid-template-columns: auto auto;
+    }
+
+
+    /* ADMIN */
+    .main-form {
+        width: 40%;
+    }
+
+    .main-items-admin h2 {
+        margin-bottom: 0.7em;
+    }
 }

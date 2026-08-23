@@ -1,60 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meny</title>
 
     <link rel="stylesheet" href="../css/main.scss">
-    <script src="../js/main.js" type="module" defer></script>
+    <script src="../js/main.js" type="module"></script>
 </head>
 
 <body>
     <header>
-        <div>
-            <!--logga-->
+        <!--logga-->
+        <div class="branding">
             <p class="logo">HC</p>
             <p class="logo-p">Hornborgarsjöns café</p>
         </div>
 
         <!--huvudmeny-->
         <nav>
-            <ul>
-                <li><a href="index.html">Hem</a></li>
-                <li class="current-page">Meny</li>
-                <li><a href="about.html">Om oss</a></li>
+            <ul class="main-menu">
+                <li><a href="index.html">HEM</a></li>
+                <li class="current-page">MENY</li>
+                <li><a href="about.html">OM OSS</a></li>
             </ul>
         </nav>
     </header>
-
-    <h1>Meny</h1>
     
-    <main>
+    <main class="main-items">
+        <h1>MENY</h1>
         <div class="menu-gridbox">
-            <div>
+            <div class="gridbox-div">
                 <h2>MACKOR</h2>
-                <div id="sandwiches-container">
+                <div id="sandwiches-container-public" class="item-div">
                         
                 </div>
             </div>
 
-            <div>
+            <div class="gridbox-div">
                 <h2>PAJER</h2>
-                <div id="pies-container">
+                <div id="pies-container-public" class="item-div">
                         
                 </div>
             </div>
 
-            <div>
+            <div class="gridbox-div">
                 <h2>FIKA</h2>
-                <div id="desserts-container">
+                <div id="desserts-container-public" class="item-div">
                     
                 </div>
             </div>
 
-            <div>
+            <div class="gridbox-div">
                 <h2>DRYCKER</h2>
-                <div id="drinks-container">
+                <div id="drinks-container-public" class="item-div">
                         
                 </div>
             </div>
@@ -64,7 +63,7 @@
     <footer>
         <!--adress-->
         <div>
-            <p><bold>Adress:</bold></p>
+            <p class="bold-text">Adress:</p>
             <p>Si och så vägen 14</p>
             <p>54943</p>
             <p>Skövde</p>
@@ -72,7 +71,7 @@
 
         <!--kontaktuppgifter-->
         <div>
-            <p><bold>Kontaktuppgifter:</bold></p>
+            <p class="bold-text">Kontaktuppgifter:</p>
             <p>Telefonnummer: 0714-15 16 17</p>
             <p>Mail: hc@telia.se</p>
         </div>

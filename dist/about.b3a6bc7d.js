@@ -721,44 +721,59 @@ var _authManagerJs = require("./authManager.js");
 var _menuManagerJs = require("./menuManager.js");
 const url = "http://localhost:1200/api";
 //skicka anvädnaren till login om användaren är oinloggad på en adminsida
-if (window.location.pathname.includes("adminindex.html") || window.location.pathname.includes("menumanager.html")) (0, _authManagerJs.auth)();
+async function checkAuthentication() {
+    if (window.location.pathname.includes("adminindex.html") || window.location.pathname.includes("menumanager.html")) await (0, _authManagerJs.auth)();
+}
+checkAuthentication();
 //logga in
 const loginFormEl = document.getElementById("login-form");
 if (loginFormEl) loginFormEl.addEventListener("submit", (0, _authManagerJs.login));
+//logga ut
+const logoutButtonEl = document.getElementById("logout-button");
+if (logoutButtonEl) logoutButtonEl.addEventListener("click", (0, _authManagerJs.logout));
 const menuFormEl = document.getElementById("menu-form");
 //skicka formulär
-if (menuFormEl) {
-    menuFormEl.addEventListener("submit", (0, _menuManagerJs.menuFormValues));
-    (0, _menuManagerJs.fetchItems)().then((0, _menuManagerJs.render));
-}
+if (menuFormEl) menuFormEl.addEventListener("submit", (0, _menuManagerJs.menuFormValues));
+//hämta och visa meny endast om sidan har en meny
+const menuContainerEl = document.getElementById("sandwiches-container") || document.getElementById("sandwiches-container-public");
+if (menuContainerEl) (0, _menuManagerJs.fetchItems)().then((0, _menuManagerJs.render)).catch((error)=>{
+    console.error("Menyn kunde inte h\xe4mtas:", error);
+});
 
 },{"./authManager.js":"8zdnW","./menuManager.js":"Nlzqr"}],"8zdnW":[function(require,module,exports,__globalThis) {
 //authorization-relaterade functioner: logga in, logga ut, JWT
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "logout", ()=>logout);
 //logga in
 parcelHelpers.export(exports, "login", ()=>login);
 //blocka adminindex om användaren inte har ett token
 parcelHelpers.export(exports, "auth", ()=>auth);
 const url = "http://localhost:1200/api";
+const logoutBtn = document.getElementById("logout-btn");
+if (logoutBtn) logoutBtn.addEventListener("click", logout);
+function logout() {
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+}
 function login(event) {
     event.preventDefault();
-    const username = document.getElementById("login-username").value;
-    const password = document.getElementById("login-password").value;
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
     //är båda fälten ifyllda?
     if (!username || !password) {
         document.getElementById("fillInAllLogin").textContent = "B\xe4gge f\xe4lten beh\xf6ver fyllas i.";
         return;
     }
     //logga in användaren
-    fetch(url, NaN, {
+    fetch(`${url}/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            username: username,
-            password: password
+            username,
+            password
         })
     }).then((response)=>{
         if (!response.ok) {
@@ -773,9 +788,26 @@ function login(event) {
         console.error("Inloggningen misslyckades: ", error.message);
     });
 }
-function auth() {
+async function auth() {
     const token = localStorage.getItem("token");
     if (!token) window.location.href = "login.html";
+    try {
+        //är token giltligt?
+        const response = await fetch(`${url}/admin`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+        //om ogiltligt, skicka tillbaka användaren till "logga in"-sidan
+        if (!response.ok) {
+            localStorage.removeItem("token");
+            window.location.href = "login.html";
+            return;
+        }
+    } catch (error) {
+        localStorage.removeItem("token");
+        window.location.href = "login.html";
+    }
 }
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"jnFvT":[function(require,module,exports,__globalThis) {
@@ -825,7 +857,7 @@ parcelHelpers.export(exports, "menuFormValues", ()=>menuFormValues);
 //skriv ut items
 parcelHelpers.export(exports, "render", ()=>render);
 const url = "http://localhost:1200/api/menu";
-const currentItemId = null;
+let currentItemId = null;
 async function fetchItems() {
     try {
         const response = await fetch(`${url}/getItem`);
@@ -848,13 +880,14 @@ async function createItem(category, name, description, price) {
         const response = await fetch(`${url}/addItem`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
             },
             body: JSON.stringify(items)
         });
         const data = await response.json();
         //felmeddelande utifall något gick fel
-        if (!response.ok) document.getElementById("error-message").textContent = "data.message";
+        if (!response.ok) document.getElementById("error-message").textContent = data.error;
         //updatera listan med items
         fetchItems().then(render);
     } catch (error) {
@@ -868,13 +901,14 @@ async function updateItem(id, category, name, description, price) {
         description,
         price
     };
-    const response = {
+    const response = await fetch(`${url}/updateItem/${id}`, {
         method: "PUT",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
         body: JSON.stringify(item)
-    };
+    });
     return await response.json();
 }
 async function deleteItem(id) {
@@ -882,7 +916,8 @@ async function deleteItem(id) {
         const response = await fetch(`${url}/deleteItem/${id}`, {
             method: "DELETE",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
             }
         });
         return response.ok;
@@ -890,7 +925,7 @@ async function deleteItem(id) {
         console.log("Ett fel har uppst\xe5tt n\xe4r en artikel skulle tas bort: ", error);
     }
 }
-function menuFormValues(event) {
+async function menuFormValues(event) {
     event.preventDefault();
     const category = document.getElementById("category").value;
     const name = document.getElementById("name").value;
@@ -909,13 +944,14 @@ function menuFormValues(event) {
     document.getElementById("menu-form").reset();
 }
 function render(items) {
-    const sandwichesContainerEl = document.getElementById("sandwiches-container");
+    const isAdminPage = document.getElementById("menu-form") !== null;
+    const sandwichesContainerEl = document.getElementById("sandwiches-container") ?? document.getElementById("sandwiches-container-public");
     sandwichesContainerEl.innerHTML = "";
-    const piesContainerEl = document.getElementById("pies-container");
+    const piesContainerEl = document.getElementById("pies-container") ?? document.getElementById("pies-container-public");
     piesContainerEl.innerHTML = "";
-    const dessertsContainerEl = document.getElementById("desserts-container");
+    const dessertsContainerEl = document.getElementById("desserts-container") ?? document.getElementById("desserts-container-public");
     dessertsContainerEl.innerHTML = "";
-    const drinksContainerEl = document.getElementById("drinks-container");
+    const drinksContainerEl = document.getElementById("drinks-container") ?? document.getElementById("drinks-container-public");
     drinksContainerEl.innerHTML = "";
     //gå igenom listan med items //article, h3 (namn), p (description, kursiv), 
     items.forEach((item)=>{
@@ -933,31 +969,37 @@ function render(items) {
         const priceEl = document.createElement("p");
         priceEl.textContent = item.price + " kr";
         priceEl.classList.add("price-p");
-        //uppdatera-knapp
-        const updateButtonEl = document.createElement("button");
-        updateButtonEl.textContent = "\xc4ndra";
-        updateButtonEl.onclick = ()=>{
-            currentItemId = item._id;
-            document.getElementById("category").value = item.category;
-            document.getElementById("name").value = item.name;
-            document.getElementById("description").value = item.description;
-            document.getElementById("price").value = item.price;
-            document.getElementById("post-menu-button").value = "Spara \xe4ndringar";
-        };
-        //ta bort-knapp
-        const deleteButtonEl = document.createElement("button");
-        deleteButtonEl.textContent = "Ta bort";
-        deleteButtonEl.onclick = ()=>{
-            deleteItem(item._id).then(()=>{
-                fetchItems().then(render);
-            });
-        };
         //lägg till allt i rätt kategori
         articleEl.appendChild(nameEl);
         articleEl.appendChild(descriptionEl);
         articleEl.appendChild(priceEl);
-        articleEl.appendChild(updateButtonEl);
-        articleEl.appendChild(deleteButtonEl);
+        //lägg till knappar om användaren är på adminsidan
+        if (isAdminPage) {
+            //uppdatera-knapp
+            const updateButtonEl = document.createElement("button");
+            updateButtonEl.textContent = "\xc4ndra";
+            updateButtonEl.classList.add("menu-button");
+            updateButtonEl.onclick = ()=>{
+                currentItemId = item._id;
+                document.getElementById("category").value = item.category;
+                document.getElementById("name").value = item.name;
+                document.getElementById("description").value = item.description;
+                document.getElementById("price").value = item.price;
+                document.getElementById("post-menu-button").value = "Spara \xe4ndringar";
+            };
+            //ta bort-knapp
+            const deleteButtonEl = document.createElement("button");
+            deleteButtonEl.textContent = "Ta bort";
+            deleteButtonEl.classList.add("menu-button");
+            deleteButtonEl.onclick = ()=>{
+                deleteItem(item._id).then(()=>{
+                    fetchItems().then(render);
+                });
+            };
+            articleEl.appendChild(updateButtonEl);
+            articleEl.appendChild(deleteButtonEl);
+        }
+        //dela in items efter sina kategorier
         switch(item.category){
             case "sandwich":
                 sandwichesContainerEl.appendChild(articleEl);

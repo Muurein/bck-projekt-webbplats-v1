@@ -1,88 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meny</title>
+    <title>Hornborgarsjöns Café - Menyhanteraren</title>
 
     <link rel="stylesheet" href="../../css/main.scss">
-    <script src="../../js/main.js" type="module" defer></script>
+    <script src="../../js/main.js" type="module"></script>
 </head>
 
 <body>
     <header>
+        <!--logga-->
+        <div class="branding">
+            <p class="logo">HC</p>
+            <p class="logo-p">Hornborgarsjöns café</p>
+            <p class="admin-p">Administrationspanel</p>
+        </div>
+
+        <!--huvudmeny-->
         <nav>
-            <ul>
-                <li><a href="adminindex.html">Hem</a></li>
-                <li class="current-page">Menyhanteraren</li>
-                <li><a href="login.html">Logga in</a></li>
+            <ul class="main-menu">
+                <li><a href="adminindex.html">HEM</a></li>
+                <li class="current-page">MENYHANTERAREN</li>
+                <li><a href="login.html">LOGGA IN</a></li>
             </ul>
         </nav>
     </header>
 
-    <h1>Menyhanteraren</h1>
+
+    
     
     <main>
-        <h2>Lägg till i menyn</h2>
-
-        <form id="menu-form">
+        <div class="main-form">
             <div>
-                <label for="category">Kategori</label>
-                <br>
-                <select name="category" id="category">
-                    <option value="sandwich">Macka</option>
-                    <option value="pie">Paj</option>
-                    <option value="dessert">Fika</option>
-                    <option value="drink">Drynk</option>
-                </select>
+                <h1>Menyhanteraren</h1>
+                <h2>Lägg till i menyn</h2>
             </div>
 
-            <div>
-                <label for="name">Namn</label>
-                <br>
-                <input type="text" id="name" name="name"> 
-            </div>
+            <form id="menu-form">
+                <div>
+                    <label for="category">Kategori</label>
+                    <br>
+                    <select name="category" id="category" class="user-input">
+                        <option value="sandwich">Macka</option>
+                        <option value="pie">Paj</option>
+                        <option value="dessert">Fika</option>
+                        <option value="drink">Dryck</option>
+                    </select>
+                </div>
 
-            <div>
-                <label for="description">Innehållsbeskrivning: </label>
-                <br>
-                <input type="text" id="description" name="description"> 
-            </div>
+                <div>
+                    <label for="name">Namn</label>
+                    <br>
+                    <input type="text" id="name" name="name" class="user-input"> 
+                </div>
 
-            <div>
-                <label for="price">Pris</label>
-                <br>
-                <input type="text" id="price" name="price"> 
-            </div>
+                <div>
+                    <label for="description">Innehållsbeskrivning</label>
+                    <br>
+                    <input type="text" id="description" name="description" class="user-input"> 
+                </div>
 
-            <!--felmeddelanden-->
-            <p id="error-message"></p>
-            <p id="fillInAllMenu"></p>
+                <div>
+                    <label for="price">Pris</label>
+                    <br>
+                    <input type="text" id="price" name="price" class="user-input"> 
+                </div>
 
-            <div>
-                <input id="post-menu-button" type="submit" value="Lägg till">
-            </div>
-        </form>
+                <!--felmeddelanden-->
+                <p id="error-message"></p>
+                <p id="fillInAllMenu"></p>
 
+                <div>
+                    <input id="post-menu-button" type="submit" value="Lägg till">
+                </div>
+            </form>
+        </div>
 
-        <section>
-            <h2>Artiklar i menyn</h2>
+        <div class="border"></div>
 
+        <section class="main-items main-items-admin">
+            <div class="menu-gridbox">
+                <div class="gridbox-div">
+                    <h2>MACKOR</h2>
+                    <div id="sandwiches-container" class="item-div">
+                            
+                    </div>
+                </div>
+
+                <div class="gridbox-div">
+                    <h2>PAJER</h2>
+                    <div id="pies-container" class="item-div">
+                            
+                    </div>
+                </div>
+
+                <div class="gridbox-div">
+                    <h2>FIKA</h2>
+                    <div id="desserts-container" class="item-div">
+                        
+                    </div>
+                </div>
+
+                <div class="gridbox-div">
+                    <h2>DRYCKER</h2>
+                    <div id="drinks-container" class="item-div">
+                            
+                    </div>
+                </div>
+        </div>
+
+            <!-- <h3>MACKOR</h3>
             <div id="sandwiches-container">
                 
             </div>
 
+            <h3>PAJER</h3>
             <div id="pies-container">
                 
             </div>
 
+            <h3>FIKA</h3>
             <div id="desserts-container">
                 
             </div>
 
+            <h3>DRINKAR</h3>
             <div id="drinks-container">
                 
-            </div>
+            </div> -->
 
         </section>
     </main>

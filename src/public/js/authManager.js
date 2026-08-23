@@ -1,12 +1,24 @@
 //authorization-relaterade functioner: logga in, logga ut, JWT
 const url = "http://localhost:1200/api";
 
+const logoutBtn = document.getElementById("logout-btn");
+
+if (logoutBtn) {
+    logoutBtn.addEventListener("click", logout);
+}
+
+
+export function logout() {
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+}
+
 //logga in
 export function login(event) {
     event.preventDefault();
 
-    const username = document.getElementById("login-username").value;
-    const password = document.getElementById("login-password").value;
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
     //är båda fälten ifyllda?
     if(!username || !password) {
@@ -17,14 +29,14 @@ export function login(event) {
     }
 
     //logga in användaren
-    fetch(url, + "/login", {
+    fetch(`${url}/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            username: username,
-            password: password
+            username,
+            password
         })
     })
     .then(response => {
@@ -47,10 +59,34 @@ export function login(event) {
 }
 
 //blocka adminindex om användaren inte har ett token
-export function auth() {
+export async function auth() {
+
     const token = localStorage.getItem("token");
 
     if(!token) {
+        window.location.href = "login.html";
+    }
+
+    try {
+        //är token giltligt?
+        const response = await fetch(`${url}/admin`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        //om ogiltligt, skicka tillbaka användaren till "logga in"-sidan
+        if(!response.ok) {
+            localStorage.removeItem("token");
+            window.location.href = "login.html";
+
+            return;
+        }
+
+    } catch(error) {
+        
+        localStorage.removeItem("token");
+
         window.location.href = "login.html";
     }
 }
