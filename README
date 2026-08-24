@@ -5,6 +5,8 @@ I det publika kan användare läsa om företaget och se deras meny.
 
 I det administrativa kan inloggade användare ändra menyn. Uppdateringarna visas dynamiskt i det publika gränssnittet.
 
+Starta applikationen med kommandot npm start
+
 ## Undersidor 
 ### Publikt gränssnitt
 - Hem: användaren introduceras till området Hornborgarsjön och ges en kort introduktion till företaget.
