@@ -7,6 +7,9 @@ I det administrativa kan inloggade användare ändra menyn. Uppdateringarna visa
 
 Starta applikationen med kommandot npm start
 
+## Relaterade projekt
+Backend: https://github.com/Muurein/bck-projket-v1 
+
 ## Undersidor 
 ### Publikt gränssnitt
 - Hem: användaren introduceras till området Hornborgarsjön och ges en kort introduktion till företaget.
